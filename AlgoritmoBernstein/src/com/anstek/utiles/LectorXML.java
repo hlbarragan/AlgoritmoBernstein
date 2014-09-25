@@ -158,6 +158,13 @@ public class LectorXML {
 		}
 	}
 	
+	/**
+	 * Método para leer la información asociada a un detalle de dependencias funcional dada.<br>
+	 *  
+	 * @param nodoBase
+	 * @param numeroNodo
+	 * @throws Exception
+	 */
 	private void cargarSeccionDependencia(Node nodoBase, int numeroNodo) throws Exception {
 		// Primero obtener la lista de nodos
 		String expresion = "*";

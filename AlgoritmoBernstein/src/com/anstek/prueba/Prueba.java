@@ -1,11 +1,5 @@
 package com.anstek.prueba;
 
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
 import com.anstek.utiles.LectorXML;
 
 public class Prueba {

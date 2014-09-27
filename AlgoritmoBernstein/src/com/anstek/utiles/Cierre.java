@@ -13,6 +13,12 @@ import com.anstek.clases.DependenciaFuncional;
  *
  */
 public class Cierre {
+	/**
+	 * Hace el cierre dado un array de atributos
+	 * @param attr Array de los atributos a los que se les va a calcular el cierre
+	 * @param dep Array de dependencias funcionales
+	 * @return HashSet como resultado del cierre
+	 */
 	public static HashSet<String> HacerCierre(Atributo[] attr, DependenciaFuncional[] dep){
 		HashSet<String> cierre = new HashSet<String>();
 		
@@ -46,6 +52,10 @@ public class Cierre {
 		return cierre;
 	}
 	
+	/**
+	 * Main de prueba
+	 * @param args
+	 */
 	public static void main(String[] args){
 		Atributo a1 = new Atributo('a', "A");
 		Atributo a2 = new Atributo('b', "B");

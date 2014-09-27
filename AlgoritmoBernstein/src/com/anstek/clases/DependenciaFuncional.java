@@ -3,29 +3,36 @@
  */
 package com.anstek.clases;
 
+import java.util.HashSet;
+
 /**
  * @author ddmurillo
  *
  */
 public class DependenciaFuncional {
-	private Atributo[] Implicante;
+	private HashSet<String> Implicante;
 	
-	private Atributo[] Implicado;
+	private HashSet<String> Implicado;
 
-	public Atributo[] getImplicado() {
-		return Implicado;
+	public DependenciaFuncional(HashSet<String> implicante,HashSet<String> implicado){
+		this.Implicante = implicante;
+		this.Implicado = implicado;
 	}
-
-	public void setImplicado(Atributo[] implicado) {
-		Implicado = implicado;
-	}
-
-	public Atributo[] getImplicante() {
+	
+	public HashSet<String> getImplicante() {
 		return Implicante;
 	}
 
-	public void setImplicante(Atributo[] implicante) {
+	public void setImplicante(HashSet<String> implicante) {
 		Implicante = implicante;
+	}
+
+	public HashSet<String> getImplicado() {
+		return Implicado;
+	}
+
+	public void setImplicado(HashSet<String> implicado) {
+		Implicado = implicado;
 	}
 	
 	/**

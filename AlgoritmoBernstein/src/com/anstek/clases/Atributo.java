@@ -11,6 +11,11 @@ public class Atributo {
 	private char Id;
 	
 	private String Nombre;
+	
+	public Atributo(char id, String nombre){
+		this.Id = id;
+		this.Nombre = nombre;
+	}
 
 	public char getId() {
 		return Id;

@@ -64,7 +64,7 @@ public class Bernstein {
 		// Quita DF redundantes
 		/// TODO
 		
-		// Obtiene ralaciones 
+		// Obtiene relaciones 
 		TreeMap<String,HashSet<String>> rel = Particion.ParticionarRelaciones(df2);
 		
 		// Obtiene el nombre de los atributos de acuerdo a los Ids de las relaciones
@@ -78,12 +78,12 @@ public class Bernstein {
 			for (int i = 0; i < keys.length; i++) {
 				knames.add(Atributo.retornarNombreDatoCodigo(keys[i], this.getAtributos()));
 			}
-			
+			System.out.println(knames);
 			HashSet<String> vnames = new HashSet<String>();
 			for (String s : r.getValue()) {
 				vnames.add(Atributo.retornarNombreDatoCodigo(s, this.getAtributos()));
 			}
-			
+			System.out.println(vnames);
 			result.put(knames.toString(), vnames);
 		}
 		

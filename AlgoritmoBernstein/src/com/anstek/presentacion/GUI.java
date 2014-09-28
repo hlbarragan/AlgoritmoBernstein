@@ -3,10 +3,13 @@
  */
 package com.anstek.presentacion;
 
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.TreeMap;
 
 import javax.swing.*;
@@ -15,7 +18,6 @@ import javax.swing.filechooser.FileFilter;
 import com.anstek.negocio.Bernstein;
 import com.anstek.utiles.LectorXML;
 
-import static javax.swing.GroupLayout.Alignment.*;
 
 /**
  * @author ddmurillo
@@ -40,8 +42,12 @@ public class GUI extends JFrame{
 	
 	public GUI(){
 		label = new JLabel("Archivo XML:");;
-        txtArchivo = new JTextField();
+        
+		txtArchivo = new JTextField();
+        txtArchivo.setEditable(false);
+        
         txtResultado = new JTextArea(20, 30);
+        txtResultado.setEditable(false);
         
         btnNormalizar = new JButton("Normalizar");
         btnNormalizar.addActionListener(new ActionListener() {
@@ -61,38 +67,86 @@ public class GUI extends JFrame{
 			}
 		});
  
-        GroupLayout layout = new GroupLayout(getContentPane());
+        GridBagLayout layout = new GridBagLayout();
+        GridBagConstraints cons = new GridBagConstraints();
         getContentPane().setLayout(layout);
-        layout.setAutoCreateGaps(true);
-        layout.setAutoCreateContainerGaps(true);
- 
-        layout.setHorizontalGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(LEADING)
-        		.addComponent(label)
-        		.addComponent(btnNormalizar))
-            .addGroup(layout.createParallelGroup(LEADING)
-                .addComponent(txtArchivo))
-            .addGroup(layout.createParallelGroup(LEADING)
-                .addComponent(btnBuscar))            
-        );
         
- 
-        layout.setVerticalGroup(layout.createSequentialGroup()
-            .addGroup(layout.createParallelGroup(BASELINE)
-                .addComponent(label)
-                .addComponent(txtArchivo)
-                .addComponent(btnBuscar))
-            .addGroup(layout.createParallelGroup(BASELINE)
-            	.addComponent(btnNormalizar))
-        );
- 
+        cons.gridx = 0;
+        cons.gridy = 0;
+        cons.gridwidth = 1;
+        cons.gridheight = 1;
+        cons.weighty = 1;
+        cons.fill = GridBagConstraints.NONE;
+        getContentPane().add(label, cons);        
+        cons.weighty = 0;
+        
+        cons.gridx = 1;
+        cons.gridy = 0;
+        cons.gridwidth = 1;
+        cons.gridheight = 1;
+        cons.weightx = 1;
+        cons.fill = GridBagConstraints.HORIZONTAL;
+        getContentPane().add(txtArchivo, cons);        
+        cons.weighty = 0;
+        
+        cons.gridx = 2;
+        cons.gridy = 0;
+        cons.gridwidth = 1;
+        cons.gridheight = 1;
+        cons.weightx = 0;
+        cons.fill = GridBagConstraints.NONE;
+        getContentPane().add(btnBuscar, cons);    
+        cons.weighty = 0;
+        
+        cons.gridx = 0;
+        cons.gridy = 1;
+        cons.gridwidth = 1;
+        cons.gridheight = 1;
+        cons.weightx = 0;
+        cons.weighty = 1;
+        cons.fill = GridBagConstraints.NONE;
+        getContentPane().add(btnNormalizar, cons);       
+        cons.weighty = 0;
+        
+        cons.gridx = 0;
+        cons.gridy = 2;
+        cons.gridwidth = 3;
+        cons.gridheight = 1;
+        cons.weighty = 2;
+        cons.weightx = 2;
+        cons.fill = GridBagConstraints.BOTH;
+        getContentPane().add(txtResultado, cons);
+        
+//        layout.setAutoCreateGaps(true);
+//        layout.setAutoCreateContainerGaps(true);
+// 
+//        layout.setHorizontalGroup(layout.createSequentialGroup()
+//            .addGroup(layout.createParallelGroup(LEADING)
+//        		.addComponent(label)
+//        		.addComponent(btnNormalizar))
+//            .addGroup(layout.createParallelGroup(LEADING)
+//                .addComponent(txtArchivo))
+//            .addGroup(layout.createParallelGroup(LEADING)
+//                .addComponent(btnBuscar))            
+//        );
+//        
+// 
+//        layout.setVerticalGroup(layout.createSequentialGroup()
+//            .addGroup(layout.createParallelGroup(BASELINE)
+//                .addComponent(label)
+//                .addComponent(txtArchivo)
+//                .addComponent(btnBuscar))
+//            .addGroup(layout.createParallelGroup(BASELINE)
+//            	.addComponent(btnNormalizar))
+//        );
+// 
         //JPanel pnResultado = new JPanel();
         //this.getContentPane()
         
         setTitle("Normalizador de Bernstein");
         pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		this.setSize(640, 480);
+		this.setSize(800, 600);
 		this.setMinimumSize(getSize());
 	}
 	
@@ -137,16 +191,29 @@ public class GUI extends JFrame{
 			
 			// Carga Archivo
 			LectorXML xmlLector = new LectorXML(archivo.getAbsolutePath());
+			xmlLector.cargarInformacion();
 			
 			// Algoritmo
 			Bernstein bn = new Bernstein(xmlLector.getAtributos(), xmlLector.getDependenciasFuncionales());
 						
-			// Pinta realciones en pantalla
+			// Ejecuta algoritmo normalizador
 			TreeMap<String,HashSet<String>> resultado = bn.NormalizadorBernstein();
 			
 			JOptionPane.showMessageDialog(this, "Normalizacion finalizada");
 			
-			txtResultado.setText(resultado.toString());
+			// Pinta realciones en pantalla
+			System.out.println(resultado.toString());
+			String relaciones = "";
+			int flag = 1;
+			for (Map.Entry<String,HashSet<String>> rel : resultado.entrySet()) {
+				relaciones += "RELACION "+String.valueOf(flag)+" => \n";
+				relaciones += "\tLLAVE: \t\t"+rel.getKey();
+				relaciones += "\n\tATRIBUTOS: \t"+rel.getValue().toString();
+				relaciones += "\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n";
+				flag++;
+			}
+			
+			txtResultado.setText(relaciones);
 			
 			
 		} catch (Exception e) {

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import com.anstek.clases.Atributo;
 import com.anstek.clases.DependenciaFuncional;
 
 /**
@@ -14,6 +15,8 @@ import com.anstek.clases.DependenciaFuncional;
  *
  */
 public class LDS {
+	public static Atributo[] listaAtributos;
+	
 	/**
 	 * Dado un conjunto de dependencias funcionales retorna un nuevo conjunto de DFs simplificando los implicados (lado derecho)
 	 * @param dependencias
@@ -30,11 +33,13 @@ public class LDS {
 					h1.add(v);
 					//Nueva dependencia
 					DependenciaFuncional df = new DependenciaFuncional(dependencias[i].getImplicante(), h1);
+					df.setListaAtributos(listaAtributos);
 					newDependencias.add(df);
 				}				
 			}
 			else if (dependencias[i].getImplicado().size() == 1) {
 				DependenciaFuncional df = new DependenciaFuncional(dependencias[i].getImplicante(), dependencias[i].getImplicado());
+				df.setListaAtributos(listaAtributos);
 				newDependencias.add(df);
 			}
 		}

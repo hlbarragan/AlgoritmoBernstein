@@ -270,6 +270,7 @@ public class LectorXML {
 				throw new Exception("Error en la estructura del detalle de la dependencia funcional " + numeroNodo + " en el docunento");
 			}
 		}
+		dependenciaFuncional.setListaAtributos(this.atributos);
 		dependenciaFuncional.setImplicado(atributosImplicados);
 		dependenciaFuncional.setImplicante(atributosImplicantes);
 		

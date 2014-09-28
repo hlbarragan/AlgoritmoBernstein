@@ -16,10 +16,12 @@ import com.anstek.utiles.Cierre;
  *
  */
 public class AtributosExtranios {
+	public static Atributo[] listaAtributos;
+	
 	/**
-	 * Elimina atributos extraños de las dependencias funcionales (solo aplica para los implicantes com mas de un atributo)
+	 * Elimina atributos extraï¿½os de las dependencias funcionales (solo aplica para los implicantes com mas de un atributo)
 	 * @param dependencias Dependencias funcionales
-	 * @return Array con las dependencias funcionales sin atributos extraños
+	 * @return Array con las dependencias funcionales sin atributos extraï¿½os
 	 */
 	public static DependenciaFuncional[] LimpiaAtributosExtranios(DependenciaFuncional[] dependencias) {
 		List<DependenciaFuncional> newDependencias = new ArrayList<DependenciaFuncional>();
@@ -45,13 +47,13 @@ public class AtributosExtranios {
 					// Realiza el cierre de los demas implicantes
 					HashSet<String> strange = Cierre.HacerCierre(arrAtt, dependencias);
 					
-					//Es extraño
+					//Es extraï¿½o
 					if (strange.contains(v)) {
 						dfExtr.add(v);
 					}
 				}
 				
-				// La dependencia tiene atributos extraños
+				// La dependencia tiene atributos extraï¿½os
 				if (dfExtr.size() > 0) {
 					HashSet<String> implicantesLimpios = new HashSet<String>(dependencias[i].getImplicante());
 					for (String s : dfExtr) {
@@ -59,11 +61,13 @@ public class AtributosExtranios {
 					}
 					// Nueva dependencia
 					DependenciaFuncional df = new DependenciaFuncional(implicantesLimpios, dependencias[i].getImplicado());
+					df.setListaAtributos(listaAtributos);
 					newDependencias.add(df);
 				}
 				
 			} else if (dependencias[i].getImplicante().size() == 1) {
 				DependenciaFuncional df = new DependenciaFuncional(dependencias[i].getImplicante(),dependencias[i].getImplicado());
+				df.setListaAtributos(listaAtributos);
 				newDependencias.add(df);
 			}
 		}

@@ -75,6 +75,10 @@ public class AtributosExtranios {
 		return arrDependencias;
 	}
 	
+	/**
+	 * Main prueba
+	 * @param args
+	 */
 	public static void main (String[] args){
 		//Atributo a1 = new Atributo('a', "A");
 		//Atributo a2 = new Atributo('b', "B");

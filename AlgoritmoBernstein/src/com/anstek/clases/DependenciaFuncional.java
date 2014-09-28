@@ -60,32 +60,13 @@ public class DependenciaFuncional {
 	public void setImplicado(HashSet<String> implicado) {
 		Implicado = implicado;
 	}
-	
-	/**
-	 * Retorna el atributo de una lista de atributos dado su nombre.<br>
-	 * 
-	 * @param nombreAtributo
-	 * @param listaAtributos
-	 * @return
-	 */
-	public static Atributo retornarAtributoPorNombre(String nombreAtributo, Atributo[] listaAtributos) {
-		Atributo resultado = null;
-		
-		for (Atributo atributo: listaAtributos) {
-			if (atributo.getNombre().equals(nombreAtributo)) {
-				resultado = atributo;
-				break;
-			}
-		}
-		
-		return resultado;
-	}
 
 	/**
 	 * Establece implicados desde un array de atributos
 	 * @param atributosImplicados
 	 */
 	public void setImplicado(Atributo[] atributosImplicados) {
+		this.Implicado = new HashSet<String>();
 		for (int i = 0; i < atributosImplicados.length; i++) {
 			this.Implicado.add(String.valueOf(atributosImplicados[i].getId()));
 		}
@@ -96,6 +77,7 @@ public class DependenciaFuncional {
 	 * @param atributosImplicantes
 	 */
 	public void setImplicante(Atributo[] atributosImplicantes) {
+		this.Implicante = new HashSet<String>();
 		for (int i = 0; i < atributosImplicantes.length; i++) {
 			this.Implicante.add(String.valueOf(atributosImplicantes[i].getId()));
 		}

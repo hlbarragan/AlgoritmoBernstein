@@ -252,7 +252,7 @@ public class LectorXML {
 		for (int i = 0; i < listaNodos.getLength(); i++) {
 			Node nodo = listaNodos.item(i);
 			String nombreAtributo = nodo.getFirstChild().getNodeValue();
-			Atributo atributo = DependenciaFuncional.retornarAtributoPorNombre(nombreAtributo, this.atributos);
+			Atributo atributo = Atributo.retornarAtributoPorNombre(nombreAtributo, this.atributos);
 			String nombreNodo = nodo.getNodeName();
 			
 			switch (nombreNodo) {

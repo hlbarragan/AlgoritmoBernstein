@@ -82,18 +82,19 @@ public class Atributo {
 	}
 	
 	/**
-	 * Retorna el nombre de un atributo dado su código.<br>
+	 * Retorna la referencia de un atributo dado su código y una lista de 
+	 * atributos.<br>
 	 * 
 	 * @param codigo
 	 * @param listaAtributos
 	 * @return
 	 */
-	public static String retornarNombreDatoCodigo(String codigo, Atributo[] listaAtributos) {
-		String resultado = null;
+	public static Atributo retornarAtributoPorCodigo(String codigo, Atributo[] listaAtributos) {
+		Atributo resultado = null;
 		
 		for (Atributo atributo: listaAtributos) {
 			if (atributo.getId() == codigo.charAt(0)) {
-				resultado = atributo.getNombre();
+				resultado = atributo;
 				break;
 			}
 		}
@@ -112,7 +113,7 @@ public class Atributo {
 		HashSet<String> resultado = new HashSet<String>();
 		
 		for (String codigoAtributo: listaCodigos) {
-			String nombreAtributo = Atributo.retornarNombreDatoCodigo(codigoAtributo, listaAtributos);
+			String nombreAtributo = Atributo.retornarAtributoPorCodigo(codigoAtributo, listaAtributos).getNombre();
 			resultado.add(nombreAtributo);
 		}
 		

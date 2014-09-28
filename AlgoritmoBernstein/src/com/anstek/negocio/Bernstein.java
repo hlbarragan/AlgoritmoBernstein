@@ -56,16 +56,19 @@ public class Bernstein {
 	 */
 	public TreeMap<String,HashSet<String>> NormalizadorBernstein(){
 		// Lado derecho Sipmle
+		LDS.listaAtributos = this.atributos;
 		DependenciaFuncional[] df1 = LDS.LadoDerechoSimple(this.dependencias);
 		
-		// Limpia atributos extraños
+		// Limpia atributos extraï¿½os
+		AtributosExtranios.listaAtributos = this.atributos;
 		DependenciaFuncional[] df2 = AtributosExtranios.LimpiaAtributosExtranios(df1);
 		
 		// Quita DF redundantes
-		/// TODO
+		DependenciasRedundantes dr = new DependenciasRedundantes(this.atributos);
+		DependenciaFuncional[] df3 = dr.eliminarDependenciasRedundantes(df2);
 		
 		// Obtiene ralaciones 
-		TreeMap<String,HashSet<String>> rel = Particion.ParticionarRelaciones(df2);
+		TreeMap<String,HashSet<String>> rel = Particion.ParticionarRelaciones(df3);
 		
 		// Obtiene el nombre de los atributos de acuerdo a los Ids de las relaciones
 		TreeMap<String,HashSet<String>> result = new TreeMap<String, HashSet<String>>();		
@@ -76,12 +79,12 @@ public class Bernstein {
 			HashSet<String> knames = new HashSet<String>();
 			
 			for (int i = 0; i < keys.length; i++) {
-				knames.add(Atributo.retornarNombreDatoCodigo(keys[i], this.getAtributos()));
+				knames.add(Atributo.retornarAtributoPorCodigo(keys[i], this.getAtributos()).getNombre());
 			}
 			
 			HashSet<String> vnames = new HashSet<String>();
 			for (String s : r.getValue()) {
-				vnames.add(Atributo.retornarNombreDatoCodigo(s, this.getAtributos()));
+				vnames.add(Atributo.retornarAtributoPorCodigo(s, this.getAtributos()).getNombre());
 			}
 			
 			result.put(knames.toString(), vnames);

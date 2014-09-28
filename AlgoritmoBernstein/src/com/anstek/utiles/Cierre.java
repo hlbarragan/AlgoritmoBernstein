@@ -33,13 +33,19 @@ public class Cierre {
 			HashSet<String> cierretmp = new HashSet<String>();
 			// longitud inicial
 			int len = cierre.size();
-			for (String v : cierre) {
-				for(int j = 0; j < dep.length;j++){
-					if(dep[j].getImplicante().contains(v)){
-						cierretmp.addAll(dep[j].getImplicado());
-					}
+			for (int j = 0; j < dep.length;j++) {
+				if (DependenciaFuncional.conjuntoContenido(dep[j].getImplicante(), cierre, false)) {
+					cierretmp.addAll(dep[j].getImplicado());
 				}
 			}
+			
+//			for (String v : cierre) {
+//				for(int j = 0; j < dep.length;j++){
+//					if(dep[j].getImplicante().contains(v)){
+//						cierretmp.addAll(dep[j].getImplicado());
+//					}
+//				}
+//			}
 			
 			cierre.addAll(cierretmp);
 			

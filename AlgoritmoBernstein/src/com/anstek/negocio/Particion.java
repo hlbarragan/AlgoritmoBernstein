@@ -21,9 +21,10 @@ public class Particion {
 	 */
 	public static TreeMap<String,HashSet<String>> ParticionarRelaciones(DependenciaFuncional[] dependencias){
 		TreeMap<String,HashSet<String>> particion = new TreeMap<String, HashSet<String>>();
-		
+		System.out.println("PARTICION");
 		for (int i = 0; i < dependencias.length; i++) {
-			
+			System.out.println(dependencias[i].getImplicante() + " - " + dependencias[i].getImplicado());
+			System.out.println("############################################");
 			if (particion.containsKey(dependencias[i].getImplicante().toString())) {
 				particion.get(dependencias[i].getImplicante().toString()).addAll(dependencias[i].getImplicado());
 			}	

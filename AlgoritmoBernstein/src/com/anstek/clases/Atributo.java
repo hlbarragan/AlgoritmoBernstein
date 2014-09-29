@@ -103,6 +103,27 @@ public class Atributo {
 	}
 	
 	/**
+	 * Retorna la referencia de un atributo dado su código y una lista de 
+	 * atributos.<br>
+	 * 
+	 * @param codigo
+	 * @param listaAtributos
+	 * @return
+	 */
+	public static Atributo retornarAtributoPorCodigo(char codigo, Atributo[] listaAtributos) {
+		Atributo resultado = null;
+		
+		for (Atributo atributo: listaAtributos) {
+			if (atributo.getId() == codigo) {
+				resultado = atributo;
+				break;
+			}
+		}
+		
+		return resultado;
+	}
+	
+	/**
 	 * Retorna la lista de nombres de atributos dada una lista de códigos de atributos dada.<br>
 	 * 
 	 * @param listaCodigos

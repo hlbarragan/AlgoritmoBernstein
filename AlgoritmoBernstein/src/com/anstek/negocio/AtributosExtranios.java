@@ -64,6 +64,13 @@ public class AtributosExtranios {
 					df.setListaAtributos(listaAtributos);
 					newDependencias.add(df);
 				}
+				else{
+					// Si no hay extraños, agrega la dependencia tal cual
+					// Nueva dependencia
+					DependenciaFuncional df = new DependenciaFuncional(dependencias[i].getImplicante(), dependencias[i].getImplicado());
+					df.setListaAtributos(listaAtributos);
+					newDependencias.add(df);
+				}
 				
 			} else if (dependencias[i].getImplicante().size() == 1) {
 				DependenciaFuncional df = new DependenciaFuncional(dependencias[i].getImplicante(),dependencias[i].getImplicado());
@@ -84,10 +91,12 @@ public class AtributosExtranios {
 	 * @param args
 	 */
 	public static void main (String[] args){
-		//Atributo a1 = new Atributo('a', "A");
-		//Atributo a2 = new Atributo('b', "B");
-		//Atributo a3 = new Atributo('c', "C");
-		//Atributo a4 = new Atributo('d', "D");
+		Atributo a1 = new Atributo('a', "A");
+		Atributo a2 = new Atributo('b', "B");
+		Atributo a3 = new Atributo('c', "C");
+		Atributo a4 = new Atributo('d', "D");
+		Atributo a5 = new Atributo('e', "E");
+		Atributo a6 = new Atributo('f', "F");
 		
 		HashSet<String> hs1 = new HashSet<String>();
 		hs1.add("a");
@@ -122,6 +131,7 @@ public class AtributosExtranios {
 		DependenciaFuncional dep4 = new DependenciaFuncional(hs5, hs6);
 		DependenciaFuncional dep5 = new DependenciaFuncional(hs7, hs8);
 		
+		LDS.listaAtributos = new Atributo[]{a1,a2,a3,a4,a5,a6};
 		DependenciaFuncional[] res = AtributosExtranios.LimpiaAtributosExtranios(new DependenciaFuncional[]{dep1,dep2,dep3,dep4,dep5});
 		
 		for (int i = 0; i < res.length; i++) {

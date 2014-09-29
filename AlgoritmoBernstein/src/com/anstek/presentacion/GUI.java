@@ -49,6 +49,8 @@ public class GUI extends JFrame{
         txtResultado = new JTextArea(20, 30);
         txtResultado.setEditable(false);
         
+        JScrollPane scroll = new JScrollPane(txtResultado);
+        
         btnNormalizar = new JButton("Normalizar");
         btnNormalizar.addActionListener(new ActionListener() {
 			
@@ -115,7 +117,7 @@ public class GUI extends JFrame{
         cons.weighty = 2;
         cons.weightx = 2;
         cons.fill = GridBagConstraints.BOTH;
-        getContentPane().add(txtResultado, cons);
+        getContentPane().add(scroll, cons);
         
 //        layout.setAutoCreateGaps(true);
 //        layout.setAutoCreateContainerGaps(true);

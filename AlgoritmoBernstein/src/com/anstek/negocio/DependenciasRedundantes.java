@@ -39,12 +39,16 @@ public class DependenciasRedundantes {
 	 * @return
 	 */
 	public DependenciaFuncional[] eliminarDependenciasRedundantes(DependenciaFuncional[] dependenciasEntrada) {
-		HashSet<DependenciaFuncional> resultado = new HashSet<DependenciaFuncional>();
+		HashSet<DependenciaFuncional> resultado = new HashSet<DependenciaFuncional>(Arrays.asList(dependenciasEntrada));
 		
 		// Recorrer el conjunto de dependencias funcionales
 		for (DependenciaFuncional dependencia: dependenciasEntrada) {
+			resultado.remove(dependencia);
+			DependenciaFuncional[] arregloDependencias = new DependenciaFuncional[resultado.size()];
+			resultado.toArray(arregloDependencias);
+			
 			// Si la dependencia es redundante, eliminarla
-			if (!dependenciaEsRedundante(dependencia, dependenciasEntrada)) {
+			if (!dependenciaEsRedundante(dependencia, arregloDependencias)) {
 				resultado.add(dependencia);
 			}
 		}
@@ -64,8 +68,6 @@ public class DependenciasRedundantes {
 	 */
 	private boolean dependenciaEsRedundante(DependenciaFuncional dependencia, DependenciaFuncional[] dependenciasEntrada) {
 		// Se calcula el cierre del implicante de la dependencia a validar
-		HashSet<DependenciaFuncional> dependencias = new HashSet<DependenciaFuncional>(Arrays.asList(dependenciasEntrada));
-		dependencias.remove(dependencia);
 		Atributo[] atributosImplicante = new Atributo[dependencia.getImplicante().size()];
 		int i = 0;
 		for (String codigo: dependencia.getImplicante()) {
@@ -73,9 +75,7 @@ public class DependenciasRedundantes {
 			atributosImplicante[i] = atributo;
 			i++;
 		}
-		DependenciaFuncional[] arregloDependencias = new DependenciaFuncional[dependencias.size()];
-		dependencias.toArray(arregloDependencias);
-		HashSet<String> cierre = Cierre.HacerCierre(atributosImplicante,arregloDependencias);
+		HashSet<String> cierre = Cierre.HacerCierre(atributosImplicante,dependenciasEntrada);
 		if (DependenciaFuncional.conjuntoContenido(dependencia.getImplicado(), cierre, false)) {
 			return true;
 		} else {

@@ -27,25 +27,25 @@ public class AtributosExtranios {
 		List<DependenciaFuncional> newDependencias = new ArrayList<DependenciaFuncional>();
 
 		for (int i = 0; i < dependencias.length; i++) {
-			// Se simplifican los implicantes con mas de un atributo
+			// Se simplifican los implicantes con mas de un atributop
 			if (dependencias[i].getImplicante().size() > 1) {
 				//
-				HashSet<String> dfExtr = new HashSet<String>();
-				for (String v : dependencias[i].getImplicante()) {
+				HashSet<Integer> dfExtr = new HashSet<Integer>();
+				for (Integer v : dependencias[i].getImplicante()) {
 					// Quita el implicante actual
-					HashSet<String> temp = new HashSet<String>(dependencias[i].getImplicante());
+					HashSet<Integer> temp = new HashSet<Integer>(dependencias[i].getImplicante());
 					temp.remove(v);
 					
 					// Array temporal de atributos de implicantes sobrantes
 					Atributo[] arrAtt = new Atributo[temp.size()];
 					int flag = 0;
-					for (String t : temp) {
-						arrAtt[flag] = new Atributo(t.charAt(0), t);
+					for (Integer t : temp) {
+						arrAtt[flag] = new Atributo(flag, t.toString());
 						flag++;
 					}						
 					
 					// Realiza el cierre de los demas implicantes
-					HashSet<String> strange = Cierre.HacerCierre(arrAtt, dependencias);
+					HashSet<Integer> strange = Cierre.HacerCierre(arrAtt, dependencias);
 					
 					//Es extraï¿½o
 					if (strange.contains(v)) {
@@ -55,8 +55,8 @@ public class AtributosExtranios {
 				
 				// La dependencia tiene atributos extraï¿½os
 				if (dfExtr.size() > 0) {
-					HashSet<String> implicantesLimpios = new HashSet<String>(dependencias[i].getImplicante());
-					for (String s : dfExtr) {
+					HashSet<Integer> implicantesLimpios = new HashSet<Integer>(dependencias[i].getImplicante());
+					for (Integer s : dfExtr) {
 						implicantesLimpios.remove(s);
 					}
 					// Nueva dependencia
@@ -65,7 +65,7 @@ public class AtributosExtranios {
 					newDependencias.add(df);
 				}
 				else{
-					// Si no hay extraños, agrega la dependencia tal cual
+					// Si no hay extraï¿½os, agrega la dependencia tal cual
 					// Nueva dependencia
 					DependenciaFuncional df = new DependenciaFuncional(dependencias[i].getImplicante(), dependencias[i].getImplicado());
 					df.setListaAtributos(listaAtributos);
@@ -125,17 +125,17 @@ public class AtributosExtranios {
 		HashSet<String> hs8 = new HashSet<String>();
 		hs8.add("f");
 		
-		DependenciaFuncional dep1 = new DependenciaFuncional(hs1, hs2);
-		DependenciaFuncional dep2 = new DependenciaFuncional(hs2, hs3);
-		DependenciaFuncional dep3 = new DependenciaFuncional(hs3, hs4);
-		DependenciaFuncional dep4 = new DependenciaFuncional(hs5, hs6);
-		DependenciaFuncional dep5 = new DependenciaFuncional(hs7, hs8);
-		
-		LDS.listaAtributos = new Atributo[]{a1,a2,a3,a4,a5,a6};
-		DependenciaFuncional[] res = AtributosExtranios.LimpiaAtributosExtranios(new DependenciaFuncional[]{dep1,dep2,dep3,dep4,dep5});
-		
-		for (int i = 0; i < res.length; i++) {
-			System.out.println(res[i].getImplicante() + " -> " + res[i].getImplicado());
-		}
+//		DependenciaFuncional dep1 = new DependenciaFuncional(hs1, hs2);
+//		DependenciaFuncional dep2 = new DependenciaFuncional(hs2, hs3);
+//		DependenciaFuncional dep3 = new DependenciaFuncional(hs3, hs4);
+//		DependenciaFuncional dep4 = new DependenciaFuncional(hs5, hs6);
+//		DependenciaFuncional dep5 = new DependenciaFuncional(hs7, hs8);
+//		
+//		LDS.listaAtributos = new Atributo[]{a1,a2,a3,a4,a5,a6};
+//		DependenciaFuncional[] res = AtributosExtranios.LimpiaAtributosExtranios(new DependenciaFuncional[]{dep1,dep2,dep3,dep4,dep5});
+//		
+//		for (int i = 0; i < res.length; i++) {
+//			System.out.println(res[i].getImplicante() + " -> " + res[i].getImplicado());
+//		}
 	}
 }

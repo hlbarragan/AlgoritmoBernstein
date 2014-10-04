@@ -10,9 +10,9 @@ import java.util.HashSet;
  *
  */
 public class DependenciaFuncional {
-	private HashSet<String> Implicante;
+	private HashSet<Integer> Implicante;
 	
-	private HashSet<String> Implicado;
+	private HashSet<Integer> Implicado;
 	
 	private Atributo[] listaAtributos;
 
@@ -26,13 +26,13 @@ public class DependenciaFuncional {
 		String contenido = "";
 		String grupo = "";
 		
-		for (String implicante: this.Implicante) {
+		for (Integer implicante: this.Implicante) {
 			Atributo atributoImplicante = Atributo.retornarAtributoPorCodigo(implicante, this.listaAtributos);
 			grupo += grupo.equals("") ? atributoImplicante.getNombre() : "," + atributoImplicante.getNombre();
 		}
 		contenido = grupo + " -> ";
 		grupo = "";
-		for (String implicado: this.Implicado) {
+		for (Integer implicado: this.Implicado) {
 			Atributo atributoImplicado = Atributo.retornarAtributoPorCodigo(implicado, this.listaAtributos);
 			grupo += grupo.equals("") ? atributoImplicado.getNombre() : "," + atributoImplicado.getNombre();
 		}
@@ -46,7 +46,7 @@ public class DependenciaFuncional {
 	 * @param implicante
 	 * @param implicado
 	 */
-	public DependenciaFuncional(HashSet<String> implicante,HashSet<String> implicado){
+	public DependenciaFuncional(HashSet<Integer> implicante,HashSet<Integer> implicado){
 		this.Implicante = implicante;
 		this.Implicado = implicado;
 	}
@@ -55,7 +55,7 @@ public class DependenciaFuncional {
 	 * Obtiene HashSet de implicantes
 	 * @return
 	 */
-	public HashSet<String> getImplicante() {
+	public HashSet<Integer> getImplicante() {
 		return Implicante;
 	}
 
@@ -63,7 +63,7 @@ public class DependenciaFuncional {
 	 * Establece implicantes desde un HashSet
 	 * @param implicante
 	 */
-	public void setImplicante(HashSet<String> implicante) {
+	public void setImplicante(HashSet<Integer> implicante) {
 		Implicante = implicante;
 	}
 
@@ -71,7 +71,7 @@ public class DependenciaFuncional {
 	 * Obtiene HashSet de implicados
 	 * @return
 	 */
-	public HashSet<String> getImplicado() {
+	public HashSet<Integer> getImplicado() {
 		return Implicado;
 	}
 
@@ -79,7 +79,7 @@ public class DependenciaFuncional {
 	 * Establece implicados desde un HashSet
 	 * @param implicado
 	 */
-	public void setImplicado(HashSet<String> implicado) {
+	public void setImplicado(HashSet<Integer> implicado) {
 		Implicado = implicado;
 	}
 
@@ -88,9 +88,9 @@ public class DependenciaFuncional {
 	 * @param atributosImplicados
 	 */
 	public void setImplicado(Atributo[] atributosImplicados) {
-		this.Implicado = new HashSet<String>();
+		this.Implicado = new HashSet<Integer>();
 		for (int i = 0; i < atributosImplicados.length; i++) {
-			this.Implicado.add(String.valueOf(atributosImplicados[i].getId()));
+			this.Implicado.add(atributosImplicados[i].getId());
 		}
 	}
 
@@ -99,9 +99,9 @@ public class DependenciaFuncional {
 	 * @param atributosImplicantes
 	 */
 	public void setImplicante(Atributo[] atributosImplicantes) {
-		this.Implicante = new HashSet<String>();
+		this.Implicante = new HashSet<Integer>();
 		for (int i = 0; i < atributosImplicantes.length; i++) {
-			this.Implicante.add(String.valueOf(atributosImplicantes[i].getId()));
+			this.Implicante.add(atributosImplicantes[i].getId());
 		}
 	}
 
@@ -122,12 +122,12 @@ public class DependenciaFuncional {
 	 * @param completo
 	 * @return
 	 */
-	public static boolean conjuntoContenido(HashSet<String> conjuntoA, HashSet<String> conjuntoB, boolean completo) {
+	public static boolean conjuntoContenido(HashSet<Integer> conjuntoA, HashSet<Integer> conjuntoB, boolean completo) {
 		boolean resultado = true;
 		
-		for (String atributoA: conjuntoA) {
+		for (Integer atributoA: conjuntoA) {
 			boolean atributoContenido = false;
-			for (String atributoB: conjuntoB) {
+			for (Integer atributoB: conjuntoB) {
 				if (atributoA.equals(atributoB)) {
 					atributoContenido = true;
 					break;

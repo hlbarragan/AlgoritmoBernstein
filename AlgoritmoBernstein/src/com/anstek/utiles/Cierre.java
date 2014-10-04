@@ -19,18 +19,18 @@ public class Cierre {
 	 * @param dep Array de dependencias funcionales
 	 * @return HashSet como resultado del cierre
 	 */
-	public static HashSet<String> HacerCierre(Atributo[] attr, DependenciaFuncional[] dep){
-		HashSet<String> cierre = new HashSet<String>();
+	public static HashSet<Integer> HacerCierre(Atributo[] attr, DependenciaFuncional[] dep){
+		HashSet<Integer> cierre = new HashSet<Integer>();
 		
 		// agrega los mismos atributos como parte del cierre
 		for (int i = 0; i < attr.length; i++) {
-			cierre.add(String.valueOf(attr[i].getId()));
+			cierre.add(attr[i].getId());
 		}
 		
 		// bucle principal
 		while (true) {
 			// temporal
-			HashSet<String> cierretmp = new HashSet<String>();
+			HashSet<Integer> cierretmp = new HashSet<Integer>();
 			// longitud inicial
 			int len = cierre.size();
 			for (int j = 0; j < dep.length;j++) {
@@ -99,14 +99,14 @@ public class Cierre {
 		HashSet<String> hs9 = new HashSet<String>();
 		hs9.add("h");
 		
-		DependenciaFuncional dep1 = new DependenciaFuncional(hs1, hs2);
-		DependenciaFuncional dep2 = new DependenciaFuncional(hs3, hs4);
-		DependenciaFuncional dep3 = new DependenciaFuncional(hs5, hs6);
-		DependenciaFuncional dep4 = new DependenciaFuncional(hs2, hs7);
-		DependenciaFuncional dep5 = new DependenciaFuncional(hs8, hs9);
+//		DependenciaFuncional dep1 = new DependenciaFuncional(hs1, hs2);
+//		DependenciaFuncional dep2 = new DependenciaFuncional(hs3, hs4);
+//		DependenciaFuncional dep3 = new DependenciaFuncional(hs5, hs6);
+//		DependenciaFuncional dep4 = new DependenciaFuncional(hs2, hs7);
+//		DependenciaFuncional dep5 = new DependenciaFuncional(hs8, hs9);
 		
-		HashSet<String> res = Cierre.HacerCierre(new Atributo[]{a1, a2},new DependenciaFuncional[]{dep1,dep2,dep3,dep4,dep5});
+//		HashSet<String> res = Cierre.HacerCierre(new Atributo[]{a1, a2},new DependenciaFuncional[]{dep1,dep2,dep3,dep4,dep5});
 		
-		System.out.println(res.toString());
+//		System.out.println(res.toString());
 	}
 }

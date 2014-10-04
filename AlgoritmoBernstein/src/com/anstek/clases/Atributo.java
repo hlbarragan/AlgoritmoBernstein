@@ -10,7 +10,7 @@ import java.util.HashSet;
  *
  */
 public class Atributo {
-	private char Id;
+	private int Id;
 	
 	private String Nombre;
 	
@@ -24,7 +24,7 @@ public class Atributo {
 	 * @param id
 	 * @param nombre
 	 */
-	public Atributo(char id, String nombre){
+	public Atributo(int id, String nombre){
 		this.Id = id;
 		this.Nombre = nombre;
 	}
@@ -33,7 +33,7 @@ public class Atributo {
 	 * Obtiene el Id del atributo
 	 * @return
 	 */
-	public char getId() {
+	public int getId() {
 		return Id;
 	}
 
@@ -41,7 +41,7 @@ public class Atributo {
 	 * Establece Id del atributo
 	 * @param id
 	 */
-	public void setId(char id) {
+	public void setId(int id) {
 		Id = id;
 	}
 
@@ -89,28 +89,7 @@ public class Atributo {
 	 * @param listaAtributos
 	 * @return
 	 */
-	public static Atributo retornarAtributoPorCodigo(String codigo, Atributo[] listaAtributos) {
-		Atributo resultado = null;
-		
-		for (Atributo atributo: listaAtributos) {
-			if (atributo.getId() == codigo.charAt(0)) {
-				resultado = atributo;
-				break;
-			}
-		}
-		
-		return resultado;
-	}
-	
-	/**
-	 * Retorna la referencia de un atributo dado su código y una lista de 
-	 * atributos.<br>
-	 * 
-	 * @param codigo
-	 * @param listaAtributos
-	 * @return
-	 */
-	public static Atributo retornarAtributoPorCodigo(char codigo, Atributo[] listaAtributos) {
+	public static Atributo retornarAtributoPorCodigo(int codigo, Atributo[] listaAtributos) {
 		Atributo resultado = null;
 		
 		for (Atributo atributo: listaAtributos) {
@@ -123,6 +102,27 @@ public class Atributo {
 		return resultado;
 	}
 	
+//	/**
+//	 * Retorna la referencia de un atributo dado su código y una lista de 
+//	 * atributos.<br>
+//	 * 
+//	 * @param codigo
+//	 * @param listaAtributos
+//	 * @return
+//	 */
+//	public static Atributo retornarAtributoPorCodigo(int codigo, Atributo[] listaAtributos) {
+//		Atributo resultado = null;
+//		
+//		for (Atributo atributo: listaAtributos) {
+//			if (atributo.getId() == codigo) {
+//				resultado = atributo;
+//				break;
+//			}
+//		}
+//		
+//		return resultado;
+//	}
+	
 	/**
 	 * Retorna la lista de nombres de atributos dada una lista de códigos de atributos dada.<br>
 	 * 
@@ -130,10 +130,10 @@ public class Atributo {
 	 * @param listaAtributos
 	 * @return
 	 */
-	public static HashSet<String> retornarListadoNombresAtributos(HashSet<String> listaCodigos, Atributo[] listaAtributos) {
+	public static HashSet<String> retornarListadoNombresAtributos(HashSet<Integer> listaCodigos, Atributo[] listaAtributos) {
 		HashSet<String> resultado = new HashSet<String>();
 		
-		for (String codigoAtributo: listaCodigos) {
+		for (Integer codigoAtributo: listaCodigos) {
 			String nombreAtributo = Atributo.retornarAtributoPorCodigo(codigoAtributo, listaAtributos).getNombre();
 			resultado.add(nombreAtributo);
 		}

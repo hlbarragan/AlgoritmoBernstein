@@ -70,12 +70,12 @@ public class DependenciasRedundantes {
 		// Se calcula el cierre del implicante de la dependencia a validar
 		Atributo[] atributosImplicante = new Atributo[dependencia.getImplicante().size()];
 		int i = 0;
-		for (String codigo: dependencia.getImplicante()) {
+		for (Integer codigo: dependencia.getImplicante()) {
 			Atributo atributo = Atributo.retornarAtributoPorCodigo(codigo, this.listaAtributos);
 			atributosImplicante[i] = atributo;
 			i++;
 		}
-		HashSet<String> cierre = Cierre.HacerCierre(atributosImplicante,dependenciasEntrada);
+		HashSet<Integer> cierre = Cierre.HacerCierre(atributosImplicante,dependenciasEntrada);
 		if (DependenciaFuncional.conjuntoContenido(dependencia.getImplicado(), cierre, false)) {
 			return true;
 		} else {

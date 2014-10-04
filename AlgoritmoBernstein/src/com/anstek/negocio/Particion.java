@@ -19,18 +19,18 @@ public class Particion {
 	 * @param dependencias
 	 * @return
 	 */
-	public static TreeMap<String,HashSet<String>> ParticionarRelaciones(DependenciaFuncional[] dependencias){
-		TreeMap<String,HashSet<String>> particion = new TreeMap<String, HashSet<String>>();
+	public static TreeMap<Integer,HashSet<Integer>> ParticionarRelaciones(DependenciaFuncional[] dependencias){
+		TreeMap<Integer,HashSet<Integer>> particion = new TreeMap<Integer, HashSet<Integer>>();
 		System.out.println("PARTICION");
 		for (int i = 0; i < dependencias.length; i++) {
 			System.out.println(dependencias[i].getImplicante() + " - " + dependencias[i].getImplicado());
 			System.out.println("############################################");
-			if (particion.containsKey(dependencias[i].getImplicante().toString())) {
-				particion.get(dependencias[i].getImplicante().toString()).addAll(dependencias[i].getImplicado());
+			if (particion.containsKey(dependencias[i].getImplicante())) {
+				particion.get(dependencias[i].getImplicante()).addAll(dependencias[i].getImplicado());
 			}	
 			else {
-				particion.put(dependencias[i].getImplicante().toString(), dependencias[i].getImplicante());
-				particion.get(dependencias[i].getImplicante().toString()).addAll(dependencias[i].getImplicado());
+				particion.put(dependencias[i].getImplicante(), dependencias[i].getImplicante());
+				particion.get(dependencias[i].getImplicante()).addAll(dependencias[i].getImplicado());
 			}
 		}
 		

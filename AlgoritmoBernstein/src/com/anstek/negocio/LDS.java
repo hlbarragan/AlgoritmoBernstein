@@ -28,8 +28,8 @@ public class LDS {
 		for (int i = 0; i < dependencias.length; i++) {
 			// Se simplifican los implicados con mas de un atributo
 			if (dependencias[i].getImplicado().size() > 1) {
-				for (String v : dependencias[i].getImplicado()) {
-					HashSet<String> h1 = new HashSet<String>();
+				for (Integer v : dependencias[i].getImplicado()) {
+					HashSet<Integer> h1 = new HashSet<Integer>();
 					h1.add(v);
 					//Nueva dependencia
 					DependenciaFuncional df = new DependenciaFuncional(dependencias[i].getImplicante(), h1);
@@ -92,17 +92,17 @@ public class LDS {
 		HashSet<String> hs9 = new HashSet<String>();
 		hs9.add("h");
 		
-		DependenciaFuncional dep1 = new DependenciaFuncional(hs1, hs3);
-		DependenciaFuncional dep2 = new DependenciaFuncional(hs3, hs4);
-		DependenciaFuncional dep3 = new DependenciaFuncional(hs4, hs7);
-		DependenciaFuncional dep4 = new DependenciaFuncional(hs5, hs8);
-		//DependenciaFuncional dep5 = new DependenciaFuncional(hs8, hs9);
-		
-		//HashSet<String> res = Cierre.HacerCierre(new Atributo[]{a1, a2},new DependenciaFuncional[]{dep1,dep2,dep3,dep4,dep5});
-		DependenciaFuncional[] res = LDS.LadoDerechoSimple(new DependenciaFuncional[]{dep1,dep2,dep3,dep4});
-		
-		for (int i = 0; i < res.length; i++) {
-			System.out.println(res[i].getImplicante() + " -> " + res[i].getImplicado());
-		}
+//		DependenciaFuncional dep1 = new DependenciaFuncional(hs1, hs3);
+//		DependenciaFuncional dep2 = new DependenciaFuncional(hs3, hs4);
+//		DependenciaFuncional dep3 = new DependenciaFuncional(hs4, hs7);
+//		DependenciaFuncional dep4 = new DependenciaFuncional(hs5, hs8);
+//		//DependenciaFuncional dep5 = new DependenciaFuncional(hs8, hs9);
+//		
+//		//HashSet<String> res = Cierre.HacerCierre(new Atributo[]{a1, a2},new DependenciaFuncional[]{dep1,dep2,dep3,dep4,dep5});
+//		DependenciaFuncional[] res = LDS.LadoDerechoSimple(new DependenciaFuncional[]{dep1,dep2,dep3,dep4});
+//		
+//		for (int i = 0; i < res.length; i++) {
+//			System.out.println(res[i].getImplicante() + " -> " + res[i].getImplicado());
+//		}
 	}
 }

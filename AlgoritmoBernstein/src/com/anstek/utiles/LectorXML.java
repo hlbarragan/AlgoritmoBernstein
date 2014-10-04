@@ -180,7 +180,7 @@ public class LectorXML {
 			}
 			
 			Atributo atributo = new Atributo();
-			atributo.setId((char) (i + 1));
+			atributo.setId(i + 1);
 			atributo.setNombre(nodo.getFirstChild().getNodeValue());
 			atributos[i] = atributo;
 			System.out.println("Nodo atributo " + i + ": " + nodo.getFirstChild().getNodeValue());

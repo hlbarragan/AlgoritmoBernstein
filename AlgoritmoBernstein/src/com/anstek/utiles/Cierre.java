@@ -63,41 +63,41 @@ public class Cierre {
 	 * @param args
 	 */
 	public static void main(String[] args){
-		Atributo a1 = new Atributo('a', "A");
-		Atributo a2 = new Atributo('b', "B");
-		//Atributo a3 = new Atributo('c', "C");
-		//Atributo a4 = new Atributo('d', "D");
-		
-		HashSet<String> hs1 = new HashSet<String>();
-		hs1.add("a");
-		hs1.add("b");
-		
-		HashSet<String> hs2 = new HashSet<String>();
-		hs2.add("e");
-		
-		HashSet<String> hs3 = new HashSet<String>();
-		hs3.add("a");
-		hs3.add("g");
-		
-		HashSet<String> hs4 = new HashSet<String>();
-		hs4.add("j");		
-		
-		HashSet<String> hs5 = new HashSet<String>();
-		hs5.add("b");
-		hs5.add("e");
-		
-		HashSet<String> hs6 = new HashSet<String>();
-		hs6.add("i");
-		
-		HashSet<String> hs7 = new HashSet<String>();
-		hs7.add("g");
-		
-		HashSet<String> hs8 = new HashSet<String>();
-		hs8.add("g");
-		hs8.add("i");
-		
-		HashSet<String> hs9 = new HashSet<String>();
-		hs9.add("h");
+//		Atributo a1 = new Atributo('a', "A");
+//		Atributo a2 = new Atributo('b', "B");
+//		//Atributo a3 = new Atributo('c', "C");
+//		//Atributo a4 = new Atributo('d', "D");
+//		
+//		HashSet<String> hs1 = new HashSet<String>();
+//		hs1.add("a");
+//		hs1.add("b");
+//		
+//		HashSet<String> hs2 = new HashSet<String>();
+//		hs2.add("e");
+//		
+//		HashSet<String> hs3 = new HashSet<String>();
+//		hs3.add("a");
+//		hs3.add("g");
+//		
+//		HashSet<String> hs4 = new HashSet<String>();
+//		hs4.add("j");		
+//		
+//		HashSet<String> hs5 = new HashSet<String>();
+//		hs5.add("b");
+//		hs5.add("e");
+//		
+//		HashSet<String> hs6 = new HashSet<String>();
+//		hs6.add("i");
+//		
+//		HashSet<String> hs7 = new HashSet<String>();
+//		hs7.add("g");
+//		
+//		HashSet<String> hs8 = new HashSet<String>();
+//		hs8.add("g");
+//		hs8.add("i");
+//		
+//		HashSet<String> hs9 = new HashSet<String>();
+//		hs9.add("h");
 		
 //		DependenciaFuncional dep1 = new DependenciaFuncional(hs1, hs2);
 //		DependenciaFuncional dep2 = new DependenciaFuncional(hs3, hs4);

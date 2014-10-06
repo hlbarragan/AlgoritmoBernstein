@@ -71,11 +71,11 @@ public class Bernstein {
 		System.out.println(df3.length);
 		
 		// Obtiene ralaciones 
-		TreeMap<String,HashSet<String>> rel = Particion.ParticionarRelaciones(df3);
+		TreeMap<String,HashSet<Integer>> rel = Particion.ParticionarRelaciones(df3);
 		System.out.println(rel);
 		// Obtiene el nombre de los atributos de acuerdo a los Ids de las relaciones
 		TreeMap<String,HashSet<String>> result = new TreeMap<String, HashSet<String>>();		
-		for (Map.Entry<String,HashSet<String>> r : rel.entrySet()) {
+		for (Map.Entry<String,HashSet<Integer>> r : rel.entrySet()) {
 			String k = r.getKey().replace("[","").replace("]", "");
 			String[] keys = k.split(",");
 			
@@ -83,11 +83,11 @@ public class Bernstein {
 			
 			for (int i = 0; i < keys.length; i++) {
 				//System.out.println(keys[i].length());
-				knames.add(Atributo.retornarAtributoPorCodigo((char)keys[i].charAt(keys[i].length() - 1), this.getAtributos()).getNombre());
+				knames.add(Atributo.retornarAtributoPorCodigo(Integer.valueOf(keys[i].trim()), this.getAtributos()).getNombre());
 			}
 			
 			HashSet<String> vnames = new HashSet<String>();
-			for (String s : r.getValue()) {
+			for (Integer s : r.getValue()) {
 				vnames.add(Atributo.retornarAtributoPorCodigo(s, this.getAtributos()).getNombre());
 			}
 			

@@ -4,7 +4,7 @@
 package com.anstek.negocio;
 
 import java.util.HashSet;
-import java.util.Map;
+//import java.util.Map;
 import java.util.TreeMap;
 
 import com.anstek.clases.DependenciaFuncional;
@@ -19,18 +19,16 @@ public class Particion {
 	 * @param dependencias
 	 * @return
 	 */
-	public static TreeMap<Integer,HashSet<Integer>> ParticionarRelaciones(DependenciaFuncional[] dependencias){
-		TreeMap<Integer,HashSet<Integer>> particion = new TreeMap<Integer, HashSet<Integer>>();
+	public static TreeMap<String,HashSet<Integer>> ParticionarRelaciones(DependenciaFuncional[] dependencias){
+		TreeMap<String,HashSet<Integer>> particion = new TreeMap<String, HashSet<Integer>>();
 		System.out.println("PARTICION");
 		for (int i = 0; i < dependencias.length; i++) {
-			System.out.println(dependencias[i].getImplicante() + " - " + dependencias[i].getImplicado());
-			System.out.println("############################################");
-			if (particion.containsKey(dependencias[i].getImplicante())) {
-				particion.get(dependencias[i].getImplicante()).addAll(dependencias[i].getImplicado());
+			if (particion.containsKey(dependencias[i].getImplicante().toString())) {
+				particion.get(dependencias[i].getImplicante().toString()).addAll(dependencias[i].getImplicado());
 			}	
 			else {
-				particion.put(dependencias[i].getImplicante(), dependencias[i].getImplicante());
-				particion.get(dependencias[i].getImplicante()).addAll(dependencias[i].getImplicado());
+				particion.put(dependencias[i].getImplicante().toString(), dependencias[i].getImplicante());
+				particion.get(dependencias[i].getImplicante().toString()).addAll(dependencias[i].getImplicado());
 			}
 		}
 		
@@ -73,20 +71,20 @@ public class Particion {
 		
 		HashSet<String> hs8 = new HashSet<String>();
 		hs8.add("f");
-		
-		DependenciaFuncional dep1 = new DependenciaFuncional(hs1, hs2);
-		DependenciaFuncional dep2 = new DependenciaFuncional(hs2, hs3);
-		DependenciaFuncional dep3 = new DependenciaFuncional(hs3, hs4);
-		DependenciaFuncional dep4 = new DependenciaFuncional(hs5, hs6);
-		DependenciaFuncional dep5 = new DependenciaFuncional(hs7, hs8);
-		
-		DependenciaFuncional[] ext = AtributosExtranios.LimpiaAtributosExtranios(new DependenciaFuncional[]{dep1,dep2,dep3,dep4,dep5});
-		TreeMap<String,HashSet<String>> res = Particion.ParticionarRelaciones(ext);
-		//System.out.println(res);
-		
-		for (Map.Entry<String, HashSet<String>> r : res.entrySet()) {
-			System.out.println(r.getKey() + " --> " + r.getValue().toString());
-		}
+//		
+//		DependenciaFuncional dep1 = new DependenciaFuncional(hs1, hs2);
+//		DependenciaFuncional dep2 = new DependenciaFuncional(hs2, hs3);
+//		DependenciaFuncional dep3 = new DependenciaFuncional(hs3, hs4);
+//		DependenciaFuncional dep4 = new DependenciaFuncional(hs5, hs6);
+//		DependenciaFuncional dep5 = new DependenciaFuncional(hs7, hs8);
+//		
+//		DependenciaFuncional[] ext = AtributosExtranios.LimpiaAtributosExtranios(new DependenciaFuncional[]{dep1,dep2,dep3,dep4,dep5});
+//		TreeMap<String,HashSet<String>> res = Particion.ParticionarRelaciones(ext);
+//		//System.out.println(res);
+//		
+//		for (Map.Entry<String, HashSet<String>> r : res.entrySet()) {
+//			System.out.println(r.getKey() + " --> " + r.getValue().toString());
+//		}
 		
 //		for (int i = 0; i < res.length; i++) {
 //			System.out.println(res[i].getImplicante() + " -> " + res[i].getImplicado());

@@ -5,6 +5,7 @@ package com.anstek.negocio;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+//import java.util.LinkedHashSet;
 import java.util.List;
 
 import com.anstek.clases.Atributo;
@@ -27,11 +28,13 @@ public class AtributosExtranios {
 		List<DependenciaFuncional> newDependencias = new ArrayList<DependenciaFuncional>();
 
 		for (int i = 0; i < dependencias.length; i++) {
-			// Se simplifican los implicantes con mas de un atributop
+			// Se simplifican los implicantes con mas de un atributo
 			if (dependencias[i].getImplicante().size() > 1) {
 				//
 				HashSet<Integer> dfExtr = new HashSet<Integer>();
 				for (Integer v : dependencias[i].getImplicante()) {
+					System.out.println();
+					System.out.print("Impli() "+dependencias[i].getImplicante() + " E(");
 					// Quita el implicante actual
 					HashSet<Integer> temp = new HashSet<Integer>(dependencias[i].getImplicante());
 					temp.remove(v);
@@ -40,15 +43,17 @@ public class AtributosExtranios {
 					Atributo[] arrAtt = new Atributo[temp.size()];
 					int flag = 0;
 					for (Integer t : temp) {
-						arrAtt[flag] = new Atributo(flag, t.toString());
+						arrAtt[flag] = new Atributo(Atributo.retornarAtributoPorCodigo(t, listaAtributos).getId(), t.toString());
 						flag++;
 					}						
 					
 					// Realiza el cierre de los demas implicantes
 					HashSet<Integer> strange = Cierre.HacerCierre(arrAtt, dependencias);
+					System.out.print(v +" -> "+ strange);
 					
 					//Es extra�o
 					if (strange.contains(v)) {
+						System.out.print(" = "+Atributo.retornarAtributoPorCodigo(v, listaAtributos).getNombre()+" Es extranio");
 						dfExtr.add(v);
 					}
 				}
@@ -57,8 +62,10 @@ public class AtributosExtranios {
 				if (dfExtr.size() > 0) {
 					HashSet<Integer> implicantesLimpios = new HashSet<Integer>(dependencias[i].getImplicante());
 					for (Integer s : dfExtr) {
+						System.out.println(" ... Quita "+Atributo.retornarAtributoPorCodigo(s, listaAtributos).getNombre());
 						implicantesLimpios.remove(s);
 					}
+					System.out.println("Limpios "+implicantesLimpios);
 					// Nueva dependencia
 					DependenciaFuncional df = new DependenciaFuncional(implicantesLimpios, dependencias[i].getImplicado());
 					df.setListaAtributos(listaAtributos);
@@ -86,44 +93,45 @@ public class AtributosExtranios {
 		return arrDependencias;
 	}
 	
+	
 	/**
 	 * Main prueba
 	 * @param args
 	 */
 	public static void main (String[] args){
-		Atributo a1 = new Atributo('a', "A");
-		Atributo a2 = new Atributo('b', "B");
-		Atributo a3 = new Atributo('c', "C");
-		Atributo a4 = new Atributo('d', "D");
-		Atributo a5 = new Atributo('e', "E");
-		Atributo a6 = new Atributo('f', "F");
-		
-		HashSet<String> hs1 = new HashSet<String>();
-		hs1.add("a");
-		hs1.add("d");
-		
-		HashSet<String> hs2 = new HashSet<String>();
-		hs2.add("b");
-		
-		HashSet<String> hs3 = new HashSet<String>();
-		hs3.add("c");
-		
-		HashSet<String> hs4 = new HashSet<String>();
-		hs4.add("d");		
-		
-		HashSet<String> hs5 = new HashSet<String>();
-		hs5.add("a");
-		hs5.add("b");
-		
-		HashSet<String> hs6 = new HashSet<String>();
-		hs6.add("e");
-		
-		HashSet<String> hs7 = new HashSet<String>();
-		hs7.add("a");
-		hs7.add("c");
-		
-		HashSet<String> hs8 = new HashSet<String>();
-		hs8.add("f");
+//		Atributo a1 = new Atributo('a', "A");
+//		Atributo a2 = new Atributo('b', "B");
+//		Atributo a3 = new Atributo('c', "C");
+//		Atributo a4 = new Atributo('d', "D");
+//		Atributo a5 = new Atributo('e', "E");
+//		Atributo a6 = new Atributo('f', "F");
+//		
+//		HashSet<String> hs1 = new HashSet<String>();
+//		hs1.add("a");
+//		hs1.add("d");
+//		
+//		HashSet<String> hs2 = new HashSet<String>();
+//		hs2.add("b");
+//		
+//		HashSet<String> hs3 = new HashSet<String>();
+//		hs3.add("c");
+//		
+//		HashSet<String> hs4 = new HashSet<String>();
+//		hs4.add("d");		
+//		
+//		HashSet<String> hs5 = new HashSet<String>();
+//		hs5.add("a");
+//		hs5.add("b");
+//		
+//		HashSet<String> hs6 = new HashSet<String>();
+//		hs6.add("e");
+//		
+//		HashSet<String> hs7 = new HashSet<String>();
+//		hs7.add("a");
+//		hs7.add("c");
+//		
+//		HashSet<String> hs8 = new HashSet<String>();
+//		hs8.add("f");
 		
 //		DependenciaFuncional dep1 = new DependenciaFuncional(hs1, hs2);
 //		DependenciaFuncional dep2 = new DependenciaFuncional(hs2, hs3);
@@ -137,5 +145,7 @@ public class AtributosExtranios {
 //		for (int i = 0; i < res.length; i++) {
 //			System.out.println(res[i].getImplicante() + " -> " + res[i].getImplicado());
 //		}
+		
+		//System.out.println(AtributosExtranios.powerset(new String[]{"A","B","C"}));
 	}
 }

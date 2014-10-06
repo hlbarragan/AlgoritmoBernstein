@@ -3,6 +3,7 @@
  */
 package com.anstek.presentacion;
 
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -15,7 +16,13 @@ import java.util.TreeMap;
 import javax.swing.*;
 import javax.swing.filechooser.FileFilter;
 
-import com.anstek.negocio.Bernstein;
+import com.anstek.clases.Atributo;
+import com.anstek.clases.DependenciaFuncional;
+import com.anstek.negocio.AtributosExtranios;
+//import com.anstek.negocio.Bernstein;
+import com.anstek.negocio.DependenciasRedundantes;
+import com.anstek.negocio.LDS;
+import com.anstek.negocio.Particion;
 import com.anstek.utiles.LectorXML;
 
 
@@ -47,6 +54,7 @@ public class GUI extends JFrame{
         txtArchivo.setEditable(false);
         
         txtResultado = new JTextArea(20, 30);
+        txtResultado.setFont(new Font("arial", NORMAL, 11));
         txtResultado.setEditable(false);
         
         JScrollPane scroll = new JScrollPane(txtResultado);
@@ -77,7 +85,7 @@ public class GUI extends JFrame{
         cons.gridy = 0;
         cons.gridwidth = 1;
         cons.gridheight = 1;
-        cons.weighty = 1;
+        cons.weighty = 0.2;
         cons.fill = GridBagConstraints.NONE;
         getContentPane().add(label, cons);        
         cons.weighty = 0;
@@ -105,7 +113,7 @@ public class GUI extends JFrame{
         cons.gridwidth = 1;
         cons.gridheight = 1;
         cons.weightx = 0;
-        cons.weighty = 1;
+        cons.weighty = 0.2;
         cons.fill = GridBagConstraints.NONE;
         getContentPane().add(btnNormalizar, cons);       
         cons.weighty = 0;
@@ -113,8 +121,8 @@ public class GUI extends JFrame{
         cons.gridx = 0;
         cons.gridy = 2;
         cons.gridwidth = 3;
-        cons.gridheight = 1;
-        cons.weighty = 2;
+        cons.gridheight = 3;
+        cons.weighty = 3;
         cons.weightx = 2;
         cons.fill = GridBagConstraints.BOTH;
         getContentPane().add(scroll, cons);
@@ -148,7 +156,7 @@ public class GUI extends JFrame{
         setTitle("Normalizador de Bernstein");
         pack();
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-		this.setSize(800, 600);
+		this.setSize(960, 700);
 		this.setMinimumSize(getSize());
 	}
 	
@@ -172,7 +180,7 @@ public class GUI extends JFrame{
 		});
         
         filechooser.setAcceptAllFileFilterUsed(false);
-        filechooser.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
+        filechooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
         
 	    if(filechooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 	    	archivo = filechooser.getSelectedFile();
@@ -186,42 +194,120 @@ public class GUI extends JFrame{
 	
 	protected void Normalizar(){
 		try {
-			if (archivo == null) {
+			if (archivo == null || !archivo.getName().endsWith(".xml")) {
 				JOptionPane.showMessageDialog(this, "Debe seleccionar un archivo XML para normalizar");
 				return;
 			}
+			
+			txtResultado.setText("");
 			
 			// Carga Archivo
 			LectorXML xmlLector = new LectorXML(archivo.getAbsolutePath());
 			xmlLector.cargarInformacion();
 			
 			// Algoritmo
-			Bernstein bn = new Bernstein(xmlLector.getAtributos(), xmlLector.getDependenciasFuncionales());
-						
+			//Bernstein bn = new Bernstein(xmlLector.getAtributos(), xmlLector.getDependenciasFuncionales());
 			// Ejecuta algoritmo normalizador
-			TreeMap<String,HashSet<String>> resultado = bn.NormalizadorBernstein();
+			//TreeMap<String,HashSet<String>> resultado = bn.NormalizadorBernstein();
 			
+			// Lado derecho Sipmle
+			LDS.listaAtributos = xmlLector.getAtributos();
+			DependenciaFuncional[] df1 = LDS.LadoDerechoSimple(xmlLector.getDependenciasFuncionales());
+			TextoTextarea("Lado Derecho Simple:\t\t"+DependenciaToString(df1, xmlLector.getAtributos()));
+			
+			// Limpia atributos extraï¿½os
+			AtributosExtranios.listaAtributos = xmlLector.getAtributos();
+			DependenciaFuncional[] df2 = AtributosExtranios.LimpiaAtributosExtranios(df1);
+			TextoTextarea("Atributos extraños:\t\t"+DependenciaToString(df2, xmlLector.getAtributos()));
+			
+			// Quita DF redundantes
+			DependenciasRedundantes dr = new DependenciasRedundantes(xmlLector.getAtributos());
+			DependenciaFuncional[] df3 = dr.eliminarDependenciasRedundantes(df2);
+			TextoTextarea("Dependencias reduntantes:\t"+DependenciaToString(df3, xmlLector.getAtributos()));
+			
+			// Obtiene relaciones 
+			TreeMap<String,HashSet<Integer>> rel = Particion.ParticionarRelaciones(df3);
+			System.out.println("Relaciones: "+rel);
+			
+			// Obtiene el nombre de los atributos de acuerdo a los Ids de las relaciones
+			TreeMap<String,HashSet<String>> result = new TreeMap<String, HashSet<String>>();		
+			for (Map.Entry<String,HashSet<Integer>> r : rel.entrySet()) {
+				String k = r.getKey().replace("[","").replace("]", "");
+				String[] keys = k.split(",");
+				
+				HashSet<String> knames = new HashSet<String>();
+				
+				for (int i = 0; i < keys.length; i++) {
+					//System.out.println(keys[i].length());
+					knames.add(Atributo.retornarAtributoPorCodigo(Integer.valueOf(keys[i].trim()), xmlLector.getAtributos()).getNombre());
+				}
+				
+				HashSet<String> vnames = new HashSet<String>();
+				for (Integer s : r.getValue()) {
+					vnames.add(Atributo.retornarAtributoPorCodigo(s, xmlLector.getAtributos()).getNombre());
+				}
+				
+				result.put(knames.toString(), vnames);
+			}	
+			
+			// Mensaje de fin
 			JOptionPane.showMessageDialog(this, "Normalizacion finalizada");
-			
-			// Pinta realciones en pantalla
-			System.out.println(resultado.toString());
-			String relaciones = "";
-			int flag = 1;
-			for (Map.Entry<String,HashSet<String>> rel : resultado.entrySet()) {
-				relaciones += "RELACION "+String.valueOf(flag)+" => \n";
-				relaciones += "\tLLAVE: \t\t"+rel.getKey();
-				relaciones += "\n\tATRIBUTOS: \t"+rel.getValue().toString();
-				relaciones += "\n++++++++++++++++++++++++++++++++++++++++++++++++++++++++\n\n";
-				flag++;
-			}
-			
-			txtResultado.setText(relaciones);
-			
+						
+			// Imprime
+			TextoTextarea(PrintResultado(result));
 			
 		} catch (Exception e) {
 			System.out.println("Error: "+e.getMessage());
 			JOptionPane.showMessageDialog(this, "Error en el proceso de Normalizacion\n["+e.getMessage()+"]");
 		}
+	}
+	
+	private String PrintResultado(TreeMap<String,HashSet<String>> result){		
+		// Pinta relaciones en pantalla
+		System.out.println(result.toString());
+		String relaciones = "\n\nRELACIONES OBTENIDAS\n--------------------------------------------------------------------------------------------------------------------------------------------\n";
+		int flag = 1;
+		for (Map.Entry<String,HashSet<String>> rel : result.entrySet()) {
+			relaciones += "RELACION "+String.valueOf(flag)+" => ";
+			relaciones += "LLAVE:    "+rel.getKey();
+			relaciones += "\tATRIBUTOS:    "+rel.getValue().toString();
+			relaciones += "\n--------------------------------------------------------------------------------------------------------------------------------------------\n";
+			flag++;
+		}
+		
+		return relaciones;
+	}
+	
+	private String DependenciaToString(DependenciaFuncional[] dep, Atributo[] attr){
+		String txt = "{";
+		
+		for (int i = 0; i < dep.length; i++) {
+			txt += " [";
+			int f = 0;
+			for (Integer a : dep[i].getImplicante()) {
+				if(f > 0){
+					txt += ",";
+				}
+				txt += Atributo.retornarAtributoPorCodigo(a, attr).getNombre();
+				f++;
+			}
+			txt += " => ";
+			f = 0;
+			for (Integer a : dep[i].getImplicado()) {
+				if(f > 0){
+					txt += ",";
+				}
+				txt += Atributo.retornarAtributoPorCodigo(a, attr).getNombre();
+				f++;
+			}
+			txt += "] ";
+		}
+		
+		return txt+"}";
+	}
+	
+	private void TextoTextarea(String text){
+		txtResultado.setText(txtResultado.getText() + "\n" + text);
 	}
 	
 	public static void main (String[] args){
